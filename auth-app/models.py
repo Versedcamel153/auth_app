@@ -16,7 +16,7 @@ class User(UserMixin, db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
-    _email = db.Column(db.String(1500), unique=True, nullable=False)
+    email = db.Column(db.String(1500), unique=True, nullable=False)
     pwd = db.Column(db.String(225), nullable=True)
     is_oauth = db.Column(db.Boolean, default=False)
 
@@ -46,15 +46,15 @@ class User(UserMixin, db.Model):
 
     @hybrid_property
     def email(self):
-        return self._email
+        return self.email
 
     @email.setter
     def email(self, value):
-        self._email = value
+        self.email = value
 
     @hybrid_method
     def email_equals(self, other_email):
-        return func.lower(self._email) == func.lower(other_email)
+        return func.lower(self.email) == func.lower(other_email)
 
     @staticmethod
     def email_insensitive_search(email):
