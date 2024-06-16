@@ -1,4 +1,4 @@
-from __init__ import db
+from .__init__ import db
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
