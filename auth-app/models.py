@@ -44,13 +44,13 @@ class User(UserMixin, db.Model):
         return User.query.get(user_id)
 
 
-    @hybrid_property
-    def email(self):
-        return self.email
+   # @hybrid_property
+   # def email(self):
+    #    return self.email
 
-    @email.setter
-    def email(self, value):
-        self.email = value
+   # @email.setter
+   # def email(self, value):
+   #     self.email = value
 
     @hybrid_method
     def email_equals(self, other_email):
