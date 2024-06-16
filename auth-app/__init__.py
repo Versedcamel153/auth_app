@@ -43,7 +43,7 @@ def create_app():
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
     app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
     app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
-    app.config['DEBUG'] = os.getenv('DEBUG')
+    app.config['DEBUG'] = False
 
         
     @app.after_request
