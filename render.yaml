@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: your-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    postDeploy:
+      - flask db upgrade
+    build:
+      installPackages:
+        - libpq-dev
+        - python3-dev
+    databases:
+      - auth-app
+    postdeploy:
+      - flask db upgrade

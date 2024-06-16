@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title%} {{ title }} {% endblock %}
+{% block content%}
+
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-lg-5 col-md-6 m-auto card p-4c shadow-lg p-3 mb-5 bg-body rounded">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <p>
+                    <div class="form-group mb-3">
+                        {{ form.password(class="form-control", placeholder="Password") }}
+                    </div>
+                    {% for error in form.password.errors %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div><br>
+                    {% endfor %}
+                </p>
+                <p>
+                    <div class="form-group mb-3">
+                    {{ form.confirm_password(class="form-control", placeholder="Confirm Password") }}<br>
+                    </div>
+                    {% for error in form.confirm_password.errors %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>            
+                    {% endfor %}
+                </p>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary"> Submit {{ btn_action }} </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+            
+
+{% endblock %}
