@@ -213,7 +213,7 @@ def google_login():
     google_provider_cfg = get_google_provider_cfg()
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 
-    request_uri = f"{authorization_endpoint}?response_type=code&client_id={GOOGLE_CLIENT_ID}&redirect_uri=http://127.0.0.1:5000/auth/google/callback&scope=openid%20email%20profile&access_type=offline&prompt=select_account"
+    request_uri = f"{authorization_endpoint}?response_type=code&client_id={GOOGLE_CLIENT_ID}&redirect_uri=https://auth-app-n1xw.onrender.com/auth/google/callback&scope=openid%20email%20profile&access_type=offline&prompt=select_account"
     return redirect(request_uri)
 
 @app.route('/auth/google/callback')
@@ -227,7 +227,7 @@ def google_callback():
         'code': code,
         'client_id': GOOGLE_CLIENT_ID,
         'client_secret': GOOGLE_CLIENT_SECRET,
-        'redirect_uri': "http://127.0.0.1:5000/auth/google/callback",
+        'redirect_uri': "https://auth-app-n1xw.onrender.com/auth/google/callback",
         'grant_type': 'authorization_code'
     }
     token_headers = {
