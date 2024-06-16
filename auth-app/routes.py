@@ -19,9 +19,9 @@ from flask_login import (
     login_required,
 )
 from flask_mail import Message
-from __init__ import create_app,db,login_manager,bcrypt, mail
-from models import User, get_password
-from forms import LoginForm,RegisterForm, RequestResetForm, ResetPasswordForm
+from .__init__ import create_app,db,login_manager,bcrypt, mail
+from .models import User, get_password
+from .forms import LoginForm,RegisterForm, RequestResetForm, ResetPasswordForm
 import re
 
 app = create_app()
