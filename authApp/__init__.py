@@ -33,6 +33,8 @@ security_salt = secrets.token_hex(16)
 
 def create_app():
     app = Flask(__name__)
+    from authApp.routes import main_bp
+
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
@@ -43,8 +45,7 @@ def create_app():
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
     app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
     app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
-    app.config['DEBUG'] = False
-
+    app.config['DEBUG'] = False   
         
     @app.after_request
     def add_header(response):
@@ -59,5 +60,9 @@ def create_app():
     bcrypt.init_app(app)
     mail.init_app(app)
     csrf.init_app(app)
-    
+    app.register_blueprint(main_bp)
+
     return app
+
+    
+  

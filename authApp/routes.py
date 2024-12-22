@@ -19,16 +19,14 @@ from flask_login import (
     login_required,
 )
 from flask_mail import Message
-from .__init__ import create_app,db,login_manager,bcrypt, mail
+from authApp import create_app,db,login_manager,bcrypt, mail
 from .models import User, get_password
 from .forms import LoginForm,RegisterForm, RequestResetForm, ResetPasswordForm
 import re
+from flask import Blueprint
 
-app = create_app()
+main_bp = Blueprint('main', __name__)
 
-with app.app_context():
-    db.create_all()
-    print("Database created successfully!")
 
 
 # Load Google OAuth credentials from environment variables
@@ -47,14 +45,14 @@ def load_user(user_id):
 
 
 # Home route
-@app.route("/", methods=("GET", "POST"), strict_slashes=False)
+@main_bp.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
 
     return render_template("index.html",title="Home")
 
 
 # Login route
-@app.route("/login/", methods=("GET", "POST"), strict_slashes=False)
+@main_bp.route("/login/", methods=("GET", "POST"), strict_slashes=False)
 def login():
     form = LoginForm()
     if request.method == 'POST':
@@ -85,7 +83,7 @@ def login():
     return render_template("login.html",form=form) 
 
 # Register route
-@app.route("/register/", methods=("GET", "POST"), strict_slashes=False)
+@main_bp.route("/register/", methods=("GET", "POST"), strict_slashes=False)
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -132,7 +130,7 @@ def register():
 
 
 
-@app.route("/logout")
+@main_bp.route("/logout")
 @login_required
 def logout():
     logout_user()
@@ -141,7 +139,7 @@ def logout():
 
 # main_bp = Blueprint('main', __name__)
 
-@app.route('/reset_password', methods=['GET', 'POST'])
+@main_bp.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -161,7 +159,7 @@ def reset_password():
     return render_template('reset_request.html', form=form)
 
 
-@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+@main_bp.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     print(f"Token is received:{token}")
     if current_user.is_authenticated:
@@ -202,13 +200,13 @@ If you did not make this request then simply ignore this email and no changes wi
 '''
     mail.send(msg)
 
-@app.route("/dashboard")
+@main_bp.route("/dashboard")
 @login_required
 def dashboard():
     
     return render_template('dashboard.html', title="Dashboard")
 
-@app.route('/google-login')
+@main_bp.route('/google-login')
 def google_login():
     google_provider_cfg = get_google_provider_cfg()
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]
@@ -216,7 +214,7 @@ def google_login():
     request_uri = f"{authorization_endpoint}?response_type=code&client_id={GOOGLE_CLIENT_ID}&redirect_uri=https://auth-app-n1xw.onrender.com/auth/google/callback&scope=openid%20email%20profile&access_type=offline&prompt=select_account"
     return redirect(request_uri)
 
-@app.route('/auth/google/callback')
+@main_bp.route('/auth/google/callback')
 def google_callback():
     code = request.args.get("code")
     google_provider_cfg = get_google_provider_cfg()
