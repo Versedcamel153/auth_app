@@ -225,7 +225,7 @@ def google_callback():
         'code': code,
         'client_id': GOOGLE_CLIENT_ID,
         'client_secret': GOOGLE_CLIENT_SECRET,
-        'redirect_uri': "https://auth-app-n1xw.onrender.com/auth/google/callback",
+        'redirect_uri': "https://auth-app-6bg4.onrender.com/auth/google/callback",
         'grant_type': 'authorization_code'
     }
     token_headers = {
